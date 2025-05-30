@@ -1,0 +1,13 @@
+*.pkl
+*.csv
+__pycache__/
+*.pyc
+*.log
+*.db
+*.sqlite3
+*.ipynb_checkpoints
+*.env
+*.DS_Store
+*.egg-info/
+venv/
+*.zip
