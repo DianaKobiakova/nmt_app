@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
+import os
+
 
 st.set_page_config(page_title="Калькулятор НМТ та Шанси на Вступ", layout="wide")
 
@@ -57,6 +59,21 @@ K_SCALE = DELTA_NMT / DELTA_S
 # --- ЗАВАНТАЖЕННЯ МОДЕЛЕЙ НМТ---
 @st.cache_resource
 def load_all_nmt_models(subject_config):
+
+    if 'dev' in os.environ['ENVIROMENT_MODE']:
+        st.warning("Завантаження моделей НМТ вимкнено в режимі розробки. "
+                   "Перевірте, чи встановлено змінну оточення ENVIROMENT_MODE у 'prod' для завантаження моделей.")
+    elif 'prod' in os.environ['ENVIROMENT_MODE']:
+        st.info("Завантаження моделей НМТ увімкнено 'prod'.")
+        import boto3
+        s3 = boto3.client('s3')
+        s3.download_file('nmt', 'lgbm_model_hist.pkl', 'lgbm_model_hist.pkl')
+        s3.download_file('nmt', 'lgbm_model_math.pkl', 'lgbm_model_math.pkl')
+        s3.download_file('nmt', 'lgbm_model_new.pkl', 'lgbm_model_new.pkl')
+        s3.download_file('nmt', 'konkurs_NMT.csv', 'konkurs_NMT.csv')
+
+
+
     loaded_models = {}
     all_loaded_successfully = True
     for subject_display_name, config in subject_config.items():
@@ -408,7 +425,7 @@ with tab2:
         st.caption("Цей розділ дозволяє вам проаналізувати ваші шанси на вступ до різних університетів на основі розрахованого балу НМТ.")
         st.caption("Використовуйте фільтри для вибору університетів, спеціальностей та інших параметрів.")
         st.markdown("---")
-        
+
         university_df = load_university_data(default_file_name)
 
         if university_df is not None and not university_df.empty:

@@ -1,5 +1,7 @@
 import streamlit as st
+from dotenv import load_dotenv
 
+load_dotenv()
 
 main_page = st.Page('main_page.py', title = 'Головна', icon = '🏠')
 page_1 = st.Page('page_1.py', title = '🧮 Калькулятор НМТ та Аналіз Шансів на Вступ 🎓', icon = '📄')
