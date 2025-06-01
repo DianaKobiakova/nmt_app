@@ -70,7 +70,7 @@ def load_all_nmt_models(subject_config):
         s3.download_file('nmt', 'lgbm_model_hist.pkl', 'src/lgbm_model_hist.pkl')
         s3.download_file('nmt', 'lgbm_model_math.pkl', 'src/lgbm_model_math.pkl')
         s3.download_file('nmt', 'lgbm_model_new.pkl', 'src/lgbm_model_new.pkl')
-        s3.download_file('nmt', 'konkurs_NMT.csv', 'src/lgbm_model_hist.pkl')
+        s3.download_file('nmt', 'konkurs_NMT.csv', 'src/konkurs_NMT.csv')
 
 
 
