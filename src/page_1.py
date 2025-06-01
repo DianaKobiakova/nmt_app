@@ -67,10 +67,10 @@ def load_all_nmt_models(subject_config):
         st.info("Завантаження моделей НМТ увімкнено 'prod'.")
         import boto3
         s3 = boto3.client('s3')
-        s3.download_file('nmt', 'lgbm_model_hist.pkl', 'lgbm_model_hist.pkl')
-        s3.download_file('nmt', 'lgbm_model_math.pkl', 'lgbm_model_math.pkl')
-        s3.download_file('nmt', 'lgbm_model_new.pkl', 'lgbm_model_new.pkl')
-        s3.download_file('nmt', 'konkurs_NMT.csv', 'konkurs_NMT.csv')
+        s3.download_file('nmt', 'lgbm_model_hist.pkl', 'src/lgbm_model_hist.pkl')
+        s3.download_file('nmt', 'lgbm_model_math.pkl', 'src/lgbm_model_math.pkl')
+        s3.download_file('nmt', 'lgbm_model_new.pkl', 'src/lgbm_model_new.pkl')
+        s3.download_file('nmt', 'konkurs_NMT.csv', 'src/lgbm_model_hist.pkl')
 
 
 
