@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import os
 # import datetime # Not explicitly used in the provided snippet, but can be kept if needed elsewhere
 
 st.set_page_config(layout="wide", page_title="Дашборди аналізу даних тестування")
@@ -13,6 +14,15 @@ def load_and_preprocess_data(file_path):
     Завантажує дані з CSV файлу, виконує початкову обробку (наприклад, конвертацію дат)
     та кешує результат.
     """
+    if 'dev' in os.environ['ENVIROMENT_MODE']:
+        st.warning("Завантаження моделей НМТ вимкнено в режимі розробки. "
+                   "Перевірте, чи встановлено змінну оточення ENVIROMENT_MODE у 'prod' для завантаження моделей.")
+    elif 'prod' in os.environ['ENVIROMENT_MODE']:
+        st.info("Завантаження моделей НМТ увімкнено 'prod'.")
+        import boto3
+        s3 = boto3.client('s3')
+        s3.download_file('nmt', 'main_df.csv', 'src/main_df.csv')
+
     try:
         df = pd.read_csv(file_path)
         # Початкова обробка даних, яка виконується лише один раз
