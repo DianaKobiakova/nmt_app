@@ -9,6 +9,15 @@ FILE_PATH = "src/main_df.csv" # Замініть це на реальний шл
 # Функція для завантаження та кешування даних
 @st.cache_data
 def load_data(file_path):
+    if 'dev' in os.environ['ENVIROMENT_MODE']:
+        st.warning("Завантаження моделей НМТ вимкнено в режимі розробки. "
+                   "Перевірте, чи встановлено змінну оточення ENVIROMENT_MODE у 'prod' для завантаження моделей.")
+    elif 'prod' in os.environ['ENVIROMENT_MODE']:
+        st.info("Завантаження моделей НМТ увімкнено 'prod'.")
+        import boto3
+        s3 = boto3.client('s3')
+        s3.download_file('nmt', 'main_df.csv', 'src/main_df.csv')
+
     """Завантажує дані з файлу."""
     if not os.path.exists(file_path):
         st.error(f"Файл не знайдено за шляхом: {file_path}")
